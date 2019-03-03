@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <script src="./modal.js" type="text/javascript"></script>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Lato', sans-serif;
+            }
+
+            squla-dialog#customStylingDialog {
+                --container-bg: #aaa;
+                --header-bg: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <squla-dialog
+            title="You earned a trophy!"
+            image="img/trophy.png"
+            content="Poke the box to collect!"
+            click-link="a">
+        </squla-dialog>
+
+        <squla-dialog
+            title="You earned two trophies!"
+            image="img/trophy.png"
+            content="Poke this box to collect!"
+            click-link="b">
+        </squla-dialog>
+
+        <squla-dialog>
+        </squla-dialog>
+
+        <squla-dialog
+            id="customStylingDialog">
+            <div slot="dialog-content">Custom content.</div>
+        </squla-dialog>
+
+
+        <script>
+            let dialogs = document.querySelectorAll('squla-dialog');
+            if(dialogs) {
+                dialogs.forEach((dialog) => {
+                    dialog.addEventListener('image-clicked', (event) => { console.log(event.detail) });
+                    dialog.addEventListener('dialog-closed', (event) => { console.log(event.detail) }); 
+                });
+            };
+        </script>
+    </body>
+</html>
