@@ -32,7 +32,7 @@ class SqulaDialog extends HTMLElement {
         this._closeLink.removeEventListener('click', this._onCloseClick);
     }
 
-    static get observedAttributes() { return ['foo']; }
+    static get observedAttributes() { return ['title', 'image', 'content']; }
 
     attributeChangedCallback(attr, oldValue, newValue) {
         if (attr === 'title' || attr === 'image' || attr === 'content') {
