@@ -1,7 +1,10 @@
 <html>
     <head>
         <script src="./squla-dialog.js" type="text/javascript"></script>
+        <script src="./squla-header.js" type="text/javascript"></script>
+        <script src="./squla-page.js" type="text/javascript"></script>
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link rel="manifest" href="manifest.json">
         <style>
             body {
                 font-family: 'Lato', sans-serif;
@@ -14,29 +17,35 @@
         </style>
     </head>
     <body>
-        <squla-dialog
-            title="You earned a trophy!"
-            image="img/trophy.png"
-            content="Poke the box to collect!"
-            click-link="a">
-        </squla-dialog>
-
-        <squla-dialog
-            title="You earned two trophies!"
-            image="img/trophy.png"
-            content="Poke this box to collect!"
-            click-link="b">
-        </squla-dialog>
-
-        <squla-dialog>
-        </squla-dialog>
-
-        <squla-dialog
-            id="customStylingDialog">
-            <div slot="dialog-content">Custom content.</div>
-        </squla-dialog>
-
-
+        <squla-header></squla-header>
+        <squla-page title="page1" href="/page1">
+                <div slot="content">
+                    <squla-dialog
+                        title="You earned a trophyddd!"
+                        image="img/trophy.png"
+                        content="Poke the box to collect!"
+                        click-link="a">
+                    </squla-dialog>
+                    <squla-dialog
+                        title="You earned two trophies!"
+                        image="img/trophy.png"
+                        content="Poke this box to collect!"
+                        click-link="b">
+                    </squla-dialog>
+                </div>
+        </squla-page>
+        <squla-page title="page2" href="/page2">
+            <div slot="content">
+        
+                <squla-dialog>
+                </squla-dialog>
+        
+                <squla-dialog
+                    id="customStylingDialog">
+                    <div slot="dialog-content">Custom content.</div>
+                </squla-dialog>
+            </div>
+        </squla-page>
         <script>
             let dialogs = document.querySelectorAll('squla-dialog');
             if(dialogs) {
@@ -45,6 +54,30 @@
                     dialog.addEventListener('dialog-closed', (event) => { console.log(event.detail) }); 
                 });
             };
+
+            let header = document.querySelectorAll('squla-header');
+            header[0].addEventListener('page-navigate', (event) => {
+                console.log(event.detail);
+                showPage(event.detail.href);
+            });
+
+            function showPage(href) {
+                let pages = document.querySelectorAll('squla-page');
+                pages.forEach((page) => {
+                    if (page.getAttribute('href') === href) {
+                        page.style.display = 'block';
+                    } else {
+                        page.style.display = 'none';
+                    }
+                });        
+            }
+        </script>
+        <script>
+            if('serviceWorker' in navigator) {
+                navigator.serviceWorker
+                    .register('sw.js')
+                    .then(function() { console.log("Service Worker Registered"); });
+            }
         </script>
     </body>
 </html>
